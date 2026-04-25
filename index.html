@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto SENATI</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #e3f2fd, #ffffff);
+        }
+
+        header {
+            background: linear-gradient(135deg, #0052ff, #003bb5);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background: #222;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 12px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #4da3ff;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        form {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #0052ff;
+        }
+
+        .error {
+            border-color: red;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #0052ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #003bb5;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #222;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>C.F.P. SENATI - LA OROYA</h1>
+    <p>Formulario WEB</p>
+</header>
+
+<nav>
+    <a href="#">Inicio</a>
+    <a href="#">Servicios</a>
+    <a href="#">Contacto</a>
+</nav>
+
+<div class="container">
+    <form id="formulario" novalidate>
+        <h2>REGISTRO ESTUDIANTIL</h2>
+
+        <label for="nombre">Nombre *</label>
+        <input type="text" id="nombre" required>
+        <small class="error-msg" id="errorNombre"></small>
+
+        <label for="correo">Correo *</label>
+        <input type="email" id="correo" required>
+        <small class="error-msg" id="errorCorreo"></small>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje"></textarea>
+
+        <button type="submit">Enviar</button>
+
+        <p class="success" id="mensajeExito"></p>
+    </form>
+</div>
+
+<footer>
+    <p>© 2026 SENATI</p>
+</footer>
+
+<script>
+    const form = document.getElementById("formulario");
+
+    const nombre = document.getElementById("nombre");
+    const correo = document.getElementById("correo");
+
+    const errorNombre = document.getElementById("errorNombre");
+    const errorCorreo = document.getElementById("errorCorreo");
+    const mensajeExito = document.getElementById("mensajeExito");
+
+    function validarEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        let valido = true;
+
+        // Reset
+        errorNombre.textContent = "";
+        errorCorreo.textContent = "";
+        mensajeExito.textContent = "";
+
+        nombre.classList.remove("error");
+        correo.classList.remove("error");
+
+        // Validación nombre
+        if (nombre.value.trim() === "") {
+            errorNombre.textContent = "El nombre es obligatorio";
+            nombre.classList.add("error");
+            valido = false;
+        }
+
+        // Validación correo
+        if (correo.value.trim() === "") {
+            errorCorreo.textContent = "El correo es obligatorio";
+            correo.classList.add("error");
+            valido = false;
+        } else if (!validarEmail(correo.value)) {
+            errorCorreo.textContent = "Correo no válido";
+            correo.classList.add("error");
+            valido = false;
+        }
+
+        if (valido) {
+            mensajeExito.textContent = "Mensaje enviado correctamente ✅";
+            form.reset();
+        }
+    });
+</script>
+
+</body>
+</html>
